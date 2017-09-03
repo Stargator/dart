@@ -65,25 +65,25 @@ If you get stuck, at any point, don't forget to reach out for [help](http://exer
    Dart (Etl) /Users/johndoe/exercism/dart/hello-world
 
    unchanged: 0, updated: 0, new: 1
-  ```
+   ```
 
 2. Change directory into the exercise:
 
-```batchfile
-$ cd /Users/johndoe/exercism/dart/hello-world
-```
+   ```batchfile
+   $ cd /Users/johndoe/exercism/dart/hello-world
+   ```
 
 3. Download the dependent packages:
 
-```batchfile
-$ pub get
-```
+   ```batchfile
+   $ pub get
+   ```
 
 4. Run the tests:
 
-```batchfile
-$ pub run test
-```
+   ```batchfile
+   $ pub run test
+   ```
    *(Don't worry about the tests failing, at first, this is how you begin each exercise.)*
 
 6. Solve the exercise.  Find and work through the `README.md` guide ([view on GitHub](https://github.com/exercism/dart/blob/master/exercises/hello-world/README.md)).
@@ -105,25 +105,25 @@ If you get stuck, at any point, don't forget to reach out for [help](http://exer
    Dart (Etl) /home/johndoe/exercism/dart/hello-world
 
    unchanged: 0, updated: 0, new: 1
-  ```
+   ```
 
 2. Change directory into the exercise:
 
-```batchfile
-$ cd /home/johndoe/exercism/dart/hello-world
-```
+   ```batchfile
+   $ cd /home/johndoe/exercism/dart/hello-world
+   ```
 
 3. Download the dependent packages:
 
-```batchfile
-$ pub get
-```
+   ```batchfile
+   $ pub get
+   ```
 
 4. Run the tests:
 
-```batchfile
-$ pub run test
-```
+   ```batchfile
+   $ pub run test
+   ```
    *(Don't worry about the tests failing, at first, this is how you begin each exercise.)*
 
 6. Solve the exercise.  Find and work through the `README.md` guide ([view on GitHub](https://github.com/exercism/dart/blob/master/exercises/hello-world/README.md)).
