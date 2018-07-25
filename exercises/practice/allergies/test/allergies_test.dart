@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:allergies/allergies.dart';
+import 'package:test/test.dart';
 
 final allergies = Allergies();
 

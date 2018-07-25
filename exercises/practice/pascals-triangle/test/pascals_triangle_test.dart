@@ -1,4 +1,4 @@
-import 'package:pascals_triangle/pascals_triangle.dart';
+import 'package:pascals_triangle/example.dart';
 import 'package:test/test.dart';
 
 final pascalsTriangle = PascalsTriangle();

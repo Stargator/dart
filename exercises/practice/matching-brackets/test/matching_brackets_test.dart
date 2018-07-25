@@ -1,4 +1,4 @@
-import 'package:matching_brackets/matching_brackets.dart';
+import 'package:matching_brackets/example.dart';
 import 'package:test/test.dart';
 
 void main() {

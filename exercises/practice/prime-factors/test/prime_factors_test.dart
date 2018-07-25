@@ -1,4 +1,4 @@
-import 'package:prime_factors/prime_factors.dart';
+import 'package:prime_factors/example.dart';
 import 'package:test/test.dart';
 
 void main() {

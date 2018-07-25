@@ -28,8 +28,9 @@ final Map<String, int> _scores = const {
 };
 
 int score(String word) {
-  int val = 0;
-  if (word.length > 0) {
+  var val = 0;
+
+  if (word.isNotEmpty) {
     word.split('').forEach((char) {
       final score = _scores[char.toLowerCase()];
       val += score ?? 0;

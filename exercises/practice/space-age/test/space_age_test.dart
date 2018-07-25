@@ -1,4 +1,4 @@
-import 'package:space_age/space_age.dart';
+import 'package:space_age/example.dart';
 import 'package:test/test.dart';
 
 final spaceAge = SpaceAge();

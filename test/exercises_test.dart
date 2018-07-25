@@ -15,39 +15,38 @@ Future runCmd(List<String> cmds) async {
 
   final res = await Process.run(cmd, other, runInShell: true);
 
-  if (!res.stdout.toString().isEmpty) {
+  if (res.stdout.toString().isNotEmpty) {
     stdout.write(res.stdout);
   }
 
-  if (!res.stderr.toString().isEmpty) {
+  if (res.stderr.toString().isNotEmpty) {
     stderr.write(res.stderr);
   }
 
   assert(res.exitCode == 0);
 }
 
-Future<String> getPackageName() async {
+Future<String> _getPackageName() async {
   final pubspec = File('pubspec.yaml');
 
-  final String pubspecString = await pubspec.readAsString();
+  final pubspecString = await pubspec.readAsString();
 
-  final String packageName = loadYaml(pubspecString)['name'] as String;
+  final packageName = loadYaml(pubspecString)['name'] as String;
 
   return packageName;
 }
 
-Future locateExercismDirAndExecuteTests() async {
+Future _locateExercismDirAndExecuteTests() async {
   final exercisesRootDir = Directory(practiceExcercisesDir);
 
-  assert(await exercisesRootDir.exists());
+  assert(exercisesRootDir.existsSync());
 
   final exercisesDirs = exercisesRootDir.listSync().where((d) => d is Directory);
 
   /// Sort directories alphabetically
-  final sortedExerciseDirs = exercisesDirs.toList();
-  sortedExerciseDirs.sort((a, b) => a.path.compareTo(b.path));
+  final sortedExerciseDirs = exercisesDirs.toList()..sort((a, b) => a.path.compareTo(b.path));
 
-  for (FileSystemEntity dir in sortedExerciseDirs) {
+  for (final dir in sortedExerciseDirs) {
     await runTest(dir.path);
   }
 }
@@ -58,7 +57,7 @@ Future runTest(String path) async {
 
   Directory.current = path;
 
-  final packageName = await getPackageName();
+  final packageName = await _getPackageName();
 
   print('''
 ================================================================================
@@ -66,14 +65,14 @@ Running tests for: $packageName
 ================================================================================
 ''');
 
-  File stub = File('lib/${packageName}.dart');
-  File example = File('.meta/lib/example.dart');
+  var stub = File('lib/$packageName.dart');
+  var example = File('.meta/lib/example.dart');
 
   try {
-    stub = await stub.rename('lib/${packageName}.dart.bu');
-    example = await example.rename('lib/${packageName}.dart');
+    stub = await stub.rename('lib/$packageName.dart.bu');
+    example = await example.rename('lib/$packageName.dart');
 
-    for (List<String> cmds in [
+    for (final cmds in [
       /// Pull dependencies
       ['dart', 'pub', 'upgrade'],
 
@@ -84,7 +83,7 @@ Running tests for: $packageName
     }
   } finally {
     await example.rename('.meta/lib/example.dart');
-    await stub.rename('lib/${packageName}.dart');
+    await stub.rename('lib/$packageName.dart');
 
     Directory.current = current;
   }
@@ -94,13 +93,13 @@ Running tests for: $packageName
 Future runAllTests() async {
   final dartExercismRootDir = Directory('..');
 
-  assert(await dartExercismRootDir.exists());
+  assert(dartExercismRootDir.existsSync());
 
-  await locateExercismDirAndExecuteTests();
+  await _locateExercismDirAndExecuteTests();
 
   Directory.current = dartExercismRootDir.parent;
 
-  final packageName = await getPackageName();
+  final packageName = await _getPackageName();
 
   print('''
 
@@ -119,11 +118,11 @@ void main() {
     } else {
       final testPath = '${Directory.current.path}/$practiceExcercisesDir/$testName';
 
-      if (!await Directory(testPath).exists()) {
+      if (!Directory(testPath).existsSync()) {
         throw ArgumentError('No exercise with this name: $testName');
       }
 
       await runTest(testPath);
     }
-  }, timeout: Timeout(Duration(minutes: 20)));
+  }, timeout: const Timeout(Duration(minutes: 20)));
 }

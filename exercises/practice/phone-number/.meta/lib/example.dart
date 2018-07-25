@@ -2,11 +2,10 @@ class PhoneNumber {
   /// Returns `String` for a valid number, `null` for invalid.
   String? clean(String phoneNumber) {
     /// initialize an empty string.
-    String onlyDigits = "";
+    var onlyDigits = "";
 
     /// find all digits.
-    Iterable<Match> findDigits = RegExp(r'\d+').allMatches(phoneNumber);
-    findDigits.forEach((match) {
+    RegExp(r'\d+').allMatches(phoneNumber)..forEach((match) {
       onlyDigits += match.group(0)!;
 
       /// remove all digits **for an edge case**.
@@ -45,19 +44,23 @@ class PhoneNumber {
     /// by the current logic since the regex grabs all the digits
     /// but "123-@:!-78901256" should be considered as invalid.
     /// hence if anything else still exists its an invalid number.
-    if (phoneNumber.length > 0) return null;
+    if (phoneNumber.isNotEmpty) {
+      return null;
+    }
 
     /// remove leading country code **1** to make it easy to process.
     if (onlyDigits.startsWith("1")) {
       onlyDigits = onlyDigits.substring(1);
     }
 
-    if (onlyDigits.length != 10) return null;
+    if (onlyDigits.length != 10) {
+      return null;
+    }
 
     /// after removing the country code if it exists,
     /// first and fourth digits can only range from **2-9**
     /// i.e. Area code and Exchange code.
-    RegExp codeRange = RegExp(r'^[2-9]$');
+    final codeRange = RegExp(r'^[2-9]$');
     if (codeRange.hasMatch(onlyDigits[0]) && codeRange.hasMatch(onlyDigits[3])) {
       return onlyDigits;
     }

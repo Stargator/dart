@@ -1,12 +1,12 @@
 class Anagram {
   List<String> findAnagrams(String subject, List<String> candidates) {
-    Map<String, int> subjectCharsMap = countCharacters(subject);
+    final subjectCharsMap = countCharacters(subject);
 
-    List<String> matchTracker = <String>[];
+    final matchTracker = <String>[];
 
-    for (String possible in candidates) {
+    for (final possible in candidates) {
       if (possible.toLowerCase() != subject.toLowerCase()) {
-        Map<String, int> possibleCharMap = countCharacters(possible);
+        final possibleCharMap = countCharacters(possible);
 
         if (mapsMatch(subjectCharsMap, possibleCharMap)) {
           matchTracker.add(possible);
@@ -19,10 +19,10 @@ class Anagram {
   }
 
   Map<String, int> countCharacters(String word) {
-    Map<String, int> charTracker = <String, int>{};
+    final charTracker = <String, int>{};
 
-    for (int counter = 0; counter < word.length; counter++) {
-      var key = word[counter].toLowerCase();
+    for (var counter = 0; counter < word.length; counter++) {
+      final key = word[counter].toLowerCase();
 
       charTracker[key] = charTracker.containsKey(key) ? charTracker[key]! + 1 : 1;
     }
@@ -32,9 +32,9 @@ class Anagram {
 }
 
 bool mapsMatch(Map<String, int> subjectCharsMap, Map<String, int> possibleCharMap) {
-  List<bool> trackingMatches = <bool>[];
+  final trackingMatches = <bool>[];
 
-  for (String key in possibleCharMap.keys) {
+  for (final key in possibleCharMap.keys) {
     if (subjectCharsMap.containsKey(key)) {
       trackingMatches.add(subjectCharsMap[key] == possibleCharMap[key]);
     } else {
@@ -42,7 +42,7 @@ bool mapsMatch(Map<String, int> subjectCharsMap, Map<String, int> possibleCharMa
     }
   }
 
-  for (bool result in trackingMatches) {
+  for (final result in trackingMatches) {
     if (result == false) {
       return false;
     }

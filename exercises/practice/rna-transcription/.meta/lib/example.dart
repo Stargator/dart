@@ -1,6 +1,6 @@
 class RnaTranscription {
-  String toRna(String dna) {
-    return dna.split("").map((c) {
+  String toRna(String dna) =>
+    dna.split("").map((c) {
       switch (c) {
         case "G":
           return "C";
@@ -14,5 +14,4 @@ class RnaTranscription {
           throw ArgumentError("Invalid input");
       }
     }).join("");
-  }
 }

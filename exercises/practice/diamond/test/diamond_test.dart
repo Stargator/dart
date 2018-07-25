@@ -1,4 +1,4 @@
-import 'package:diamond/diamond.dart';
+import 'package:diamond/example.dart';
 import 'package:test/test.dart';
 
 final diamond = Diamond();

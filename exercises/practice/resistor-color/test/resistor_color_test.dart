@@ -1,4 +1,4 @@
-import 'package:resistor_color/resistor_color.dart';
+import 'package:resistor_color/example.dart';
 import 'package:test/test.dart';
 
 final resistorColor = ResistorColor();

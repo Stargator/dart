@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:triangle/triangle.dart';
+import 'package:triangle/example.dart';
 
 final triangle = Triangle();
 

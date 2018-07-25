@@ -1,4 +1,4 @@
-import 'package:collatz_conjecture/collatz_conjecture.dart';
+import 'package:collatz_conjecture/example.dart';
 import 'package:test/test.dart';
 
 /// We are using a predicate to better match the error message from collatzConjecture.

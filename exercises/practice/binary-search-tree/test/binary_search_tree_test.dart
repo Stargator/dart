@@ -1,4 +1,4 @@
-import 'package:binary_search_tree/binary_search_tree.dart';
+import 'package:binary_search_tree/example.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -1,4 +1,4 @@
-import 'package:secret_handshake/secret_handshake.dart';
+import 'package:secret_handshake/example.dart';
 import 'package:test/test.dart';
 
 void main() {

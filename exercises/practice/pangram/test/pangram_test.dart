@@ -1,4 +1,4 @@
-import 'package:pangram/pangram.dart';
+import 'package:pangram/example.dart';
 import 'package:test/test.dart';
 
 void main() {

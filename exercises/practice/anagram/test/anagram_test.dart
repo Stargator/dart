@@ -1,4 +1,4 @@
-import 'package:anagram/anagram.dart';
+import 'package:anagram/example.dart';
 import 'package:test/test.dart';
 
 final anagram = Anagram();

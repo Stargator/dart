@@ -1,4 +1,4 @@
-import 'package:acronym/acronym.dart';
+import 'package:acronym/example.dart';
 import 'package:test/test.dart';
 
 final acronym = Acronym();
