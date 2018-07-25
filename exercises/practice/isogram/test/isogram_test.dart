@@ -1,4 +1,4 @@
-import 'package:isogram/isogram.dart';
+import 'package:isogram/example.dart';
 import 'package:test/test.dart';
 
 void main() {

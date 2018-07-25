@@ -8,9 +8,9 @@ class Hamming {
       throw ArgumentError('left and right strands must be of equal length');
     }
 
-    int diff = 0;
+    var diff = 0;
 
-    for (int i = 0; i < a.length; i++) {
+    for (var i = 0; i < a.length; i++) {
       if (a[i] != b[i]) {
         diff++;
       }

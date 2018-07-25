@@ -1,4 +1,4 @@
-import 'package:minesweeper/minesweeper.dart';
+import 'package:minesweeper/example.dart';
 import 'package:test/test.dart';
 
 void main() {

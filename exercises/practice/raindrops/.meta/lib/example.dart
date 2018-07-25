@@ -1,10 +1,8 @@
 class Raindrops {
   String convert(int i) {
-    bool isDiv(int divisor) {
-      return i % divisor == 0;
-    }
+    bool isDiv(int divisor) => i % divisor == 0;
 
-    String out = "";
+    var out = "";
     if (isDiv(3)) {
       out += "Pling";
     }

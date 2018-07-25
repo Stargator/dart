@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:exercism_dart/src/utils.dart';
 
-Future main() async {
-  final CommonUtils utils = CommonUtils();
+Future<Null> main() async {
+  final utils = CommonUtils();
   int errorCode = 0;
 
   print('Checking all Dart files formatting...');

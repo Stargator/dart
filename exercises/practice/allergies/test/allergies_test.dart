@@ -1,4 +1,4 @@
-import 'package:allergies/allergies.dart';
+import 'package:allergies/example.dart';
 import 'package:test/test.dart';
 
 final allergies = Allergies();

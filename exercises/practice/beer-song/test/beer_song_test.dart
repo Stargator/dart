@@ -1,4 +1,4 @@
-import 'package:beer_song/beer_song.dart';
+import 'package:beer_song/example.dart';
 import 'package:test/test.dart';
 
 void main() {

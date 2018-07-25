@@ -8,45 +8,50 @@ import 'package:yaml/yaml.dart';
 // Constants
 const _scriptFileName = 'create-exercise';
 
+/// Defines arguments so it can be parsed later.
 final _parser = ArgParser()
   ..addSeparator('Usage: $_scriptFileName [--spec-path path] <slug>')
   ..addOption('spec-path', help: 'The location of the problem-specifications directory.', valueHelp: 'path');
 
 // Helpers
 /// Determine the words within a string, so they can be placed in the proper case.
-List<String> words(String str) {
-  if (str == null) return [''];
+List<String> words(final String str) {
+  if (str == null) {
+    return [''];
+  }
 
   return str.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), ' ').replaceAll(RegExp(r' +'), ' ').trim().split(' ');
 }
 
-/// Converts first character to upper case.
-String upperFirst(String str) {
-  if (str == null || str.isEmpty) return '';
+/// Changes first character in string to uppercase.
+String upperFirst(final String str) {
+  if (str == null || str.isEmpty) {
+    return '';
+  }
 
   final chars = str.split('');
   final first = chars.first;
 
-  return first.toUpperCase() + chars.skip(1).join('');
+  return '${first.toUpperCase()}${chars.skip(1).join('')}';
 }
 
-/// Converts given string to camelCase.
+/// Converts string to camelCase.
 String camelCase(String str, {bool isUpperFirst = false}) {
   final parts = words(str);
   final first = parts.first;
   final rest = parts.skip(1);
 
-  return (isUpperFirst ? upperFirst(first) : first) + rest.map(upperFirst).join('');
+  return '${(isUpperFirst ? upperFirst(first) : first)}${rest.map(upperFirst).join('')}';
 }
 
-/// Converts given string to PascalCase.
+/// Converts string to PascalCase.
 String pascalCase(String str) => camelCase(str, isUpperFirst: true);
 
-/// Converts given string to snake_case.
-String snakeCase(String str) => words(str).join('_');
+/// Converts string to snake_case.
+String snakeCase(String str) => words(str).join("_");
 
-/// Converts given string to kebab-case.
-String kebabCase(String str) => words(str).join('-');
+/// Converts string to kebab-case.
+String kebabCase(String str) => words(str).join("-");
 
 // Templates
 /// Generates the code for an example class.
@@ -121,8 +126,8 @@ linter:
 ''';
 
 /// Parses through the given test case (or group) in order to produce a String of code for the generated test suite.
-String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool firstTest = true, String returnType}) {
-  bool skipTests = firstTest;
+String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {final bool isFirstTest = true, String returnType}) {
+  var skipTests = isFirstTest;
 
   if (testCase['cases'] != null) {
     if (returnType == null) {
@@ -136,7 +141,7 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
     final testList = <String>[];
 
     for (Map<String, Object> caseObj in testCase['cases'] as List<Map<String, Object>>) {
-      testList.add(testCaseTemplate(exerciseName, caseObj, firstTest: skipTests, returnType: returnType));
+      testList.add(testCaseTemplate(exerciseName, caseObj, isFirstTest: skipTests, returnType: returnType));
       skipTests = false;
     }
 
@@ -154,13 +159,14 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
   }
 
   final description = _repr(testCase['description']);
+  final resultType = _getFriendlyType(testCase['expected']);
   final object = camelCase(exerciseName);
-  final method = testCase['property'].toString();
-  final expected = _repr(testCase['expected'], typeDeclaration: returnType);
+  final method = camelCase(testCase['property'].toString());
+  final expected = _repr(testCase['expected'], typeDeclaration: resultType);
 
-  returnType = _finalizeReturnType(expected, returnType);
+  final finalReturnType = _finalizeReturnType(expected, resultType);
   final input = testCase['input'] as Map<String, dynamic>;
-  String arguments = input.keys.map((k) => _repr(input[k])).join(', ');
+  var arguments = input.keys.map((k) => _repr(input[k])).join(', ');
   arguments = arguments == 'null' ? '' : arguments;
 
   if (_containsWhitespaceCodes(arguments)) {
@@ -169,7 +175,7 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
 
   final result = '''
     test($description, () {
-      final $returnType result = $object.$method($arguments);
+      final $finalReturnType result = $object.$method($arguments);
       expect(result, equals($expected));
     }, skip: ${!skipTests});
 ''';
@@ -234,7 +240,7 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
   // Create files
   final testFileName = '${exerciseDir.path}/test/${exerciseFilename}_test.dart';
   File('${exerciseDir.path}/lib/example.dart').writeAsStringSync(exampleTemplate(exerciseName));
-  File('${exerciseDir.path}/lib/${exerciseFilename}.dart').writeAsStringSync(mainTemplate(exerciseName));
+  File('${exerciseDir.path}/lib/$exerciseFilename.dart').writeAsStringSync(mainTemplate(exerciseName));
   File(testFileName).writeAsStringSync(testTemplate(exerciseName));
   File('${exerciseDir.path}/analysis_options.yaml').writeAsStringSync(analysisOptionsTemplate());
   File('${exerciseDir.path}/pubspec.yaml').writeAsStringSync(pubTemplate(exerciseName, version));
@@ -244,7 +250,7 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
   final configletLoc = '$dartRoot/bin/configlet';
   final genSuccess = _runProcess(
       configletLoc, ['generate', '$dartRoot', '--spec-path', '${arguments['spec-path']}', '--only', exerciseName]);
-  if (genSuccess) {
+  if (await genSuccess) {
     stdout.write('Successfully created README.md\n');
   } else {
     stderr.write('Warning: `configlet generate` exited with an error, \'README.md\' is likely malformed.\n');
@@ -252,7 +258,7 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
 
   // The output from file generation is not always well-formatted, use dartfmt to clean it up
   final fmtSuccess = _runProcess('pub', ['run', 'dart_style:format', '-i', '0', '-l', '120', '-w', exerciseDir.path]);
-  if (fmtSuccess) {
+  if (await fmtSuccess) {
     stdout.write('Successfully created a rough-draft of tests at \'$testFileName\'.\n');
     stdout.write('You should check this over and fix or refine as necessary.\n');
   } else {
@@ -264,14 +270,14 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
   Directory.current = exerciseDir;
 
   final pubSuccess = _runProcess('pub', ['get']);
-  assert(pubSuccess);
+  assert(await pubSuccess);
 }
 
 /// If a string contains a single backslash, we need to add another behind it, so the backslash remains.
 String _escapeBackslash(String input) {
   final result = <String>[];
 
-  input.split('').forEach((String value) {
+  input.split('').forEach((value) {
     if (value == r'\') {
       result.add(value + value);
     } else {
@@ -284,9 +290,8 @@ String _escapeBackslash(String input) {
 
 String _escapeWhitespace(String input) => input..replaceAll('\\', '\\\\');
 
-bool _containsWhitespaceCodes(String input) {
-  return input.contains('\n') || input.contains('\r') || input.contains('\t');
-}
+bool _containsWhitespaceCodes(String input) =>
+    input.contains('\n') || input.contains('\r') || input.contains('\t');
 
 String _determineBestReturnType(List<dynamic> specCases) {
   final expectedList = retrieveListOfExpected(specCases);
@@ -331,14 +336,12 @@ String _determineBestReturnType(List<dynamic> specCases) {
 
 /// Parses through a list of test cases to assemble a list of all the expected values within the test cases.
 Set<dynamic> retrieveListOfExpected(List<dynamic> testCases, {Set<dynamic> expectedTypeSet}) {
-  if (expectedTypeSet == null) {
-    expectedTypeSet = Set<dynamic>();
-  }
+  expectedTypeSet ??= Set<dynamic>();
 
   for (var count = 0; count < testCases.length; count++) {
     if (testCases[count] is Map) {
       final entry = testCases[count] as Map;
-      bool addEntry = true;
+      var addEntry = true;
 
       if (entry.containsKey('expected')) {
         if (entry['expected'] is Map) {
@@ -385,7 +388,7 @@ String _handleQuotes(String input) {
 /// `typeDeclaration` is the determined return type and used to determine the type within collections.
 String _repr(Object x, {String typeDeclaration}) {
   if (x is String) {
-    String result = _escapeBackslash(x);
+    var result = _escapeBackslash(x);
     result = result
         .replaceAll('\'', r"\'")
         .replaceAll('\n', r'\n')
@@ -481,13 +484,13 @@ String _getFriendlyType(Object x) {
 
 // runProcess runs a process, writes any stdout/stderr output.
 // Returns true if the cmd was successful, false otherwise
-bool _runProcess(String cmd, List<String> arguments) {
-  final res = Process.runSync(cmd, arguments, runInShell: true);
-  if (!res.stdout.toString().isEmpty) {
+Future<bool> _runProcess(String cmd, List<String> arguments) async {
+  final res = await Process.run(cmd, arguments, runInShell: true);
+  if (res.stdout.toString().isNotEmpty) {
     stdout.write(res.stdout);
   }
 
-  if (!res.stderr.toString().isEmpty) {
+  if (res.stderr.toString().isNotEmpty) {
     stderr.write(res.stderr);
   }
 

@@ -1,3 +1,2 @@
-DateTime add(final DateTime birthDate) {
-  return birthDate.add(Duration(seconds: 1000000000));
-}
+DateTime add(final DateTime birthDate) =>
+  birthDate.add(const Duration(seconds: 1000000000));

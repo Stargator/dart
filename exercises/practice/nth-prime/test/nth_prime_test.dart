@@ -1,4 +1,4 @@
-import 'package:nth_prime/nth_prime.dart';
+import 'package:nth_prime/example.dart';
 import 'package:test/test.dart';
 
 void main() {

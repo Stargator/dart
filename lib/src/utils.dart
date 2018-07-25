@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:io';
 import 'package:io/io.dart';
 
+/// Class of utilities used throughout the repo's tooling.
 class CommonUtils {
+  /// Instance of the class which defines an instance of ProcessManager.
   CommonUtils() {
-    this._manager = ProcessManager();
+    _manager = ProcessManager();
   }
 
   ProcessManager _manager;
@@ -53,6 +55,8 @@ class CommonUtils {
 
 /// Returns [exitCode] and shows an error message if it is different from 0.
 int _exit(int exitCode) {
-  if (exitCode != 0) print('Failed. Error code: $exitCode.');
+  if (exitCode != 0) {
+    print('Failed. Error code: $exitCode.');
+  }
   return exitCode;
 }

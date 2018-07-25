@@ -1,6 +1,6 @@
 class WordCount {
   Map<String, int> countWords(String input) {
-    Map<String, int> count = Map();
+    final count = <String, int>{};
 
     /// make a list of all words using regex.
     /// \\w+ matches any number of letters
@@ -17,10 +17,10 @@ class WordCount {
     /// Lists aka "arrays" have a forEach method that applies a function to
     /// each element of the list.
     /// initialize the Map with all words and there counter to 0
-    allWords.forEach((singleWord) => count[singleWord] = 0);
-
-    /// count all words and set there counter accordingly
-    allWords.forEach((singleWord) => count[singleWord] = count[singleWord] + 1);
+    allWords
+      ..forEach((singleWord) => count[singleWord] = 0)
+      /// count all words and set there counter accordingly
+      ..forEach((singleWord) => count[singleWord] = count[singleWord] + 1);
     return count;
   }
 }

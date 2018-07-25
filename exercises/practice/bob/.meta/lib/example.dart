@@ -14,7 +14,7 @@ class Bob {
       return "Whoa, chill out!";
     }
 
-    final RegExp whitespaceEndingQuestion = new RegExp(r'\?[\s]*$');
+    final whitespaceEndingQuestion = new RegExp(r'\?[\s]*$');
 
     if (whitespaceEndingQuestion.hasMatch(message)) {
       return "Sure.";

@@ -1,4 +1,4 @@
-import 'package:resistor_color_duo/resistor_color_duo.dart';
+import 'package:resistor_color_duo/example.dart';
 import 'package:test/test.dart';
 
 final resistorColorDuo = ResistorColorDuo();

@@ -1,4 +1,4 @@
-import 'package:luhn/luhn.dart';
+import 'package:luhn/example.dart';
 import 'package:test/test.dart';
 
 void main() {
