@@ -41,17 +41,17 @@ String camelCase(String str, {bool isUpperFirst = false}) {
   final first = parts.first;
   final rest = parts.skip(1);
 
-  return '${(isUpperFirst ? upperFirst(first) : first)}${rest.map(upperFirst).join('')}';
+  return '${isUpperFirst ? upperFirst(first) : first}${rest.map(upperFirst).join('')}';
 }
 
 /// Converts string to PascalCase.
 String pascalCase(String str) => camelCase(str, isUpperFirst: true);
 
 /// Converts string to snake_case.
-String snakeCase(String str) => words(str).join("_");
+String snakeCase(String str) => words(str).join('_');
 
 /// Converts string to kebab-case.
-String kebabCase(String str) => words(str).join("-");
+String kebabCase(String str) => words(str).join('-');
 
 // Templates
 /// Generates the code for an example class.
@@ -96,7 +96,6 @@ $_testCasesString
 /// Generates the yaml code for a pubspec.yaml file.
 String pubTemplate(String name, String version) => '''
 name: '${snakeCase(name)}'
-version: $version
 environment:
   sdk: '>=2.18.0 <3.0.0'
 dev_dependencies:
