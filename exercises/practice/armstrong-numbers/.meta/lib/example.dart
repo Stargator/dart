@@ -6,7 +6,7 @@ class ArmstrongNumbers {
   bool isArmstrongNumber(final num input) {
     final numberAsString = input.toString();
     final numOfDigits = numberAsString.length;
-    var sum = 0;
+    num sum = 0;
 
     for (var count = 0; count < numOfDigits; count++) {
       final digitAsString = numberAsString.substring(count, count + 1);

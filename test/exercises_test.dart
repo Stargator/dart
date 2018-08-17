@@ -41,7 +41,7 @@ Future _locateExercismDirAndExecuteTests() async {
 
   assert(exercisesRootDir.existsSync());
 
-  final exercisesDirs = exercisesRootDir.listSync().where((d) => d is Directory);
+  final exercisesDirs = exercisesRootDir.listSync().whereType<Directory>();
 
   /// Sort directories alphabetically
   final sortedExerciseDirs = exercisesDirs.toList()..sort((a, b) => a.path.compareTo(b.path));
