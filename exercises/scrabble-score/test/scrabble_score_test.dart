@@ -10,15 +10,15 @@ void main() {
     });
 
     group('should return the appropriate score for', () {
-      test('lowercase letters', () {
+      test('lowercase letter', () {
         expect(score('a'), equals(1));
       }, skip: true);
 
-      test('uppercase letters', () {
+      test('uppercase letter', () {
         expect(score('A'), equals(1));
       }, skip: true);
 
-      test('valuable letters', () {
+      test('valuable letter', () {
         expect(score('f'), equals(4));
       }, skip: true);
 
@@ -26,31 +26,31 @@ void main() {
         expect(score('pinata'), equals(8));
       }, skip: true);
 
-      test('long, mixed-case word', () {
-        expect(score('OxyphenButazone'), equals(41));
-      }, skip: true);
-
-      test('medium, valuable word', () {
-        expect(score('quirky'), equals(22));
-      }, skip: true);
-
-      test('medium word', () {
-        expect(score('street'), equals(6));
+      test('short word', () {
+        expect(score('at'), equals(2));
       }, skip: true);
 
       test('short, valuable word', () {
         expect(score('zoo'), equals(12));
       }, skip: true);
 
-      test('short word', () {
-        expect(score('at'), equals(2));
+      test('medium word', () {
+        expect(score('street'), equals(6));
       }, skip: true);
 
-      test('a word containing one of every letter of the alphabet', () {
+      test('medium, valuable word', () {
+        expect(score('quirky'), equals(22));
+      }, skip: true);
+
+      test('long, mixed-case word', () {
+        expect(score('OxyphenButazone'), equals(41));
+      }, skip: true);
+
+      test('entire alphabet available', () {
         expect(score('abcdefghijklmnopqrstuvwxyz'), equals(87));
       }, skip: true);
 
-      test('a word containing one of every letter of the alphabet in reverse', () {
+      test('entire alphabet in reverse', () {
         expect(score('zyxwvutsrqponmlkjihgfedcba'), equals(87));
       }, skip: true);
     });
