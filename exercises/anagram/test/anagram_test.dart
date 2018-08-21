@@ -29,7 +29,7 @@ void slightlyLessSimpleTests() {
   }, skip: true);
 
   test('does not detect anagram subsets', () {
-    final List<Object> result = anagram.findAnagrams('good', ['dog', 'goody']);
+    final List<String> result = anagram.findAnagrams('good', ['dog', 'goody']);
     expect(result, equals(<String>[]));
   }, skip: true);
 
