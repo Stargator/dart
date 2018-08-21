@@ -1,9 +1,9 @@
 import 'package:acronym/acronym.dart';
 import 'package:test/test.dart';
 
-void main() {
-  final acronym = new Acronym();
+final acronym = new Acronym();
 
+void main() {
   group('Acronym', () {
     group('Abbreviate a phrase', () {
       test('basic', () {
