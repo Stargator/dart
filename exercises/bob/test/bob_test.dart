@@ -1,8 +1,7 @@
 import 'package:bob/bob.dart';
 import 'package:test/test.dart';
 
-void main() {
-  final bob = new Bob();
+final bob = Bob();
 
   group('Bob', () {
     test('stating something', () {
