@@ -1,16 +1,16 @@
 import 'package:armstrong_numbers/armstrong_numbers.dart';
 import 'package:test/test.dart';
 
-void main() {
-  final armstrongNumbers = new ArmstrongNumbers();
+final armstrongNumbers = new ArmstrongNumbers();
 
+void main() {
   group('ArmstrongNumbers', () {
-    test("Zero is an Armstrong number", () {
+    test('Zero is an Armstrong number', () {
       final bool result = armstrongNumbers.isArmstrongNumber(0);
       expect(result, equals(true));
     }, skip: false);
 
-    test("Single digit numbers are Armstrong numbers", () {
+    test('Single digit numbers are Armstrong numbers', () {
       final bool result = armstrongNumbers.isArmstrongNumber(5);
       expect(result, equals(true));
     }, skip: true);
