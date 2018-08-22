@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:scrabble_score/scrabble_score.dart';
 
 void main() {
-  group('Scrabble score', () {
+  group('ScrabbleScore', () {
     group('should return a score of 0 for', () {
       test('empty input', () {
         expect(score(''), equals(0));
