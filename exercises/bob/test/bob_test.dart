@@ -121,7 +121,7 @@ void main() {
     }, skip: true);
 
     test('other whitespace', () {
-      final String result = bob.response('\n');
+      final String result = bob.response('\n\r \t');
       expect(result, equals('Fine. Be that way!'));
     }, skip: true);
 
