@@ -160,24 +160,34 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
   String object = camelCase(exerciseName);
   String method = camelCase(testCase['property'].toString(), isMethodName: true);
   String expected = _repr(testCase['expected'], typeDeclaration: returnType);
+  String finalExpected = expected;
 
   returnType = _finalizeReturnType(expected, returnType);
   Map<String, dynamic> input = testCase['input'] as Map<String, dynamic>;
   String arguments = input.keys.map((k) => _repr(input[k])).join(', ');
   arguments = arguments == 'null' ? '' : arguments;
+  String finalArguments = arguments;
 
   if (_containsWhitespaceCodes(arguments)) {
-    arguments = _escapeWhitespace(arguments);
+    finalArguments = _escapeWhitespace(arguments);
   }
 
-  final result = '''
+  if (input.length == 1 && arguments.length > 2 && arguments.substring(1, arguments.length - 2).length > 2
+      && arguments.substring(1, arguments.length - 2).contains('\'', 1)) {
+    finalArguments = _handleQuotes(arguments);
+  }
+
+  if (input.length == 1 && expected.length > 2 && expected.substring(1, expected.length - 2).length > 2 &&
+      expected.substring(1, expected.length - 2).contains('\'', 1)) {
+    finalExpected = _handleQuotes(expected);
+  }
+
+  return '''
     test($description, () {
-      final $returnType result = $object.$method($arguments);
-      expect(result, equals($expected));
+      final $returnType result = $object.$method($finalArguments);
+      expect(result, equals($finalExpected));
     }, skip: ${!skipTests});
 ''';
-
-  return result;
 }
 
 String _finalizeReturnType(String expected, String returnType) {
