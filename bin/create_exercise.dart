@@ -12,6 +12,8 @@ final _parser = ArgParser()
   ..addOption('spec-path', help: 'The location of the problem-specifications directory.', valueHelp: 'path');
 
 // Helpers
+bool _isLower(String character) => character.codeUnitAt(0) >= 97 && character.codeUnitAt(0) <= 122;
+
 /// Determine the words within a string, so they can be placed in the proper case.
 List<String> words(String str) {
   if (str == null) return [''];
@@ -30,7 +32,11 @@ String upperFirst(String str) {
 }
 
 /// Converts given string to camelCase.
-String camelCase(String str, {bool isUpperFirst = false}) {
+String camelCase(String str, {bool isUpperFirst = false, bool isMethodName = false}) {
+  if (isMethodName && _isLower(str.substring(0,1))) {
+    return isUpperFirst ? upperFirst(str) : str;
+  }
+
   final parts = words(str);
   final first = parts.first;
   final rest = parts.skip(1);
@@ -152,7 +158,7 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
 
   String description = _repr(testCase['description']);
   String object = camelCase(exerciseName);
-  String method = testCase['property'].toString();
+  String method = camelCase(testCase['property'].toString(), isMethodName: true);
   String expected = _repr(testCase['expected'], typeDeclaration: returnType);
 
   returnType = _finalizeReturnType(expected, returnType);
