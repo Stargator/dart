@@ -21,6 +21,8 @@ List<String> words(String str) {
   return str.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), ' ').replaceAll(RegExp(r' +'), ' ').trim().split(' ');
 }
 
+//bool _isUpper(String character) => character.codeUnitAt(0) >= 65 && character.codeUnitAt(0) <= 90;
+
 /// Converts first character to upper case.
 String upperFirst(String str) {
   if (str == null || str.length == 0) return '';
@@ -446,7 +448,7 @@ String _defineMap(Map x, String iterableType) {
 String _getIterableType(Iterable iter) {
   Set<String> types = iter.map(_getFriendlyType).toSet();
 
-  if (types.length == 1) {
+  if (types.length == 1) { // Run against anagrams to find out why "String" is not returned
     return types.first;
   }
 

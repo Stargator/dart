@@ -22,6 +22,7 @@ doc/
 *.js.deps
 *.js.map
 *.info.json
+/exercises/word-count/test/word_count_test.dart
 
 ## IDE files/folders
 /.idea/
