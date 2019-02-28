@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:hamming/hamming.dart';
+import 'package:hamming/example.dart';
 
 /// Test cases match one-to-one with those described
 /// in the problem specification found here:

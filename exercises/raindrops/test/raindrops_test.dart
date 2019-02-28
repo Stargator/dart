@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:raindrops/raindrops.dart';
+import 'package:raindrops/example.dart';
 
 final Raindrops raindrops = new Raindrops();
 

@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:phone_number/phone_number.dart';
+import 'package:phone_number/example.dart';
 
 final PhoneNumber phoneNumber = new PhoneNumber();
 

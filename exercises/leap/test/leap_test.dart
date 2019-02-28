@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:leap/leap.dart';
+import 'package:leap/example.dart';
 
 final Leap leap = new Leap();
 

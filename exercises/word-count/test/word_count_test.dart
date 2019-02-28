@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:word_count/word_count.dart';
+import 'package:word_count/example.dart';
 
 final WordCount wordCount = new WordCount();
 

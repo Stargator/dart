@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:scrabble_score/scrabble_score.dart';
+import 'package:scrabble_score/example.dart';
 
 void main() {
   group('ScrabbleScore', () {
