@@ -27,11 +27,11 @@ Future runCmd(List<String> cmds) async {
 }
 
 Future<String> getPackageName() async {
-  final pubspec = File('pubspec.yaml');
+  final pubspecFile = File('pubspec.yaml');
 
-  final String pubspecString = await pubspec.readAsString();
+  final String pubspecAsString = await pubspecFile.readAsString();
 
-  final String packageName = loadYaml(pubspecString)['name'] as String;
+  final String packageName = loadYaml(pubspecAsString)['name'] as String;
 
   return packageName;
 }
@@ -113,13 +113,13 @@ Running tests for: $packageName
 void main() {
   final testName = Platform.environment[envName];
 
-  test('Exercises', () async {
+  test('Exercises', () {
     if (testName == null) {
       await runAllTests();
     } else {
       final testPath = '${Directory.current.path}/$practiceExcercisesDir/$testName';
 
-      if (!await Directory(testPath).exists()) {
+      if (!Directory(testPath).existsSync()) {
         throw ArgumentError('No exercise with this name: $testName');
       }
 

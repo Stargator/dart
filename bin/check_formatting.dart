@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:exercism_dart/src/utils.dart';
 
-Future main() async {
-  final CommonUtils utils = CommonUtils();
-  int errorCode = 0;
+Future<Null> main() async {
+  final utils = CommonUtils();
+  var errorCode = 0;
 
   print('Checking all Dart files formatting...');
   errorCode = await utils

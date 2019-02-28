@@ -121,8 +121,8 @@ linter:
 ''';
 
 /// Parses through the given test case (or group) in order to produce a String of code for the generated test suite.
-String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool firstTest = true, String returnType}) {
-  bool skipTests = firstTest;
+String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool isFirstTest = true, String returnType}) {
+  bool skipTests = isFirstTest;
 
   if (testCase['cases'] != null) {
     if (returnType == null) {
@@ -136,8 +136,7 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
     final testList = <String>[];
 
     for (Map<String, Object> caseObj in testCase['cases'] as List<Map<String, Object>>) {
-      testList.add(testCaseTemplate(exerciseName, caseObj, firstTest: skipTests, returnType: returnType));
-      skipTests = false;
+      testList.add(testCaseTemplate(exerciseName, caseObj, isFirstTest: skipTests = false, returnType: returnType));
     }
 
     final tests = testList.join('\n');

@@ -4,7 +4,7 @@ import 'package:io/io.dart';
 
 class CommonUtils {
   CommonUtils() {
-    this._manager = ProcessManager();
+    _manager = ProcessManager();
   }
 
   ProcessManager _manager;
