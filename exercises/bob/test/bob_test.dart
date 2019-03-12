@@ -41,14 +41,14 @@ void main() {
     }, skip: true);
 
     test('using acronyms in regular speech', () {
-      final String result = bob.response('It\'s OK if you don\'t want to go work for NASA.');
+      final String result = bob.response('It\\'s OK if you don\\'t want to go work for NASA.');
       expect(result, equals('Whatever.'));
     }, skip: true);
 
     test('forceful question', () {
       final String result = bob.response('WHAT\'S GOING ON?');
-      expect(result, equals('Calm down, I know what I\'m doing!'));
-    }, skip: true);
+      expect(result, equals('Calm down, I know what I\\'m doing!'));
+      }, skip: true);
 
     test('shouting numbers', () {
       final String result = bob.response('1, 2, 3 GO!');
