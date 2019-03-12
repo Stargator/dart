@@ -5,7 +5,9 @@ final pascalsTriangle = PascalsTriangle();
 
 void main() {
   group('PascalsTriangle', () {
-    group('Given a count, return a collection of that many rows of pascal\'s triangle', () {
+    group(
+        'Given a count, return a collection of that many rows of pascal\'s triangle',
+        () {
       test('zero rows', () {
         final List<List<int>> result = pascalsTriangle.rows(0);
         expect(result, equals(<List<int>>[]));

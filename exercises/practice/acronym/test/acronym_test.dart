@@ -43,7 +43,7 @@ void main() {
       }, skip: true);
 
       test('apostrophes', () {
-        final String result = acronym.abbreviate('Halley\'s Comet');
+        final String result = acronym.abbreviate('Halley\\'s Comet');
         expect(result, equals('HC'));
       }, skip: true);
 
