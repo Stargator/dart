@@ -9,8 +9,8 @@ void main() {
       final List<String> result = diamond.rows('A');
       expect(
         result,
-        equals([
-          'A',
+        equals(<String>[
+        'A'
         ]),
       );
     }, skip: false);
@@ -19,10 +19,10 @@ void main() {
       final List<String> result = diamond.rows('B');
       expect(
         result,
-        equals([
+        equals(<String>[
           ' A ',
           'B B',
-          ' A ',
+          ' A '
         ]),
       );
       }, skip: true);
@@ -31,12 +31,12 @@ void main() {
       final List<String> result = diamond.rows('C');
       expect(
         result,
-        equals([
+        equals(<String>[
           '  A  ',
           ' B B ',
           'C   C',
           ' B B ',
-          '  A  ',
+          '  A  '
         ]),
       );
       }, skip: true);
@@ -45,14 +45,14 @@ void main() {
       final List<String> result = diamond.rows('D');
       expect(
         result,
-        equals([
+        equals(<String>[
           '   A   ',
           '  B B  ',
           ' C   C ',
           'D     D',
           ' C   C ',
           '  B B  ',
-          '   A   ',
+          '   A   '
         ]),
       );
       }, skip: true);
@@ -61,7 +61,7 @@ void main() {
       final List<String> result = diamond.rows('Z');
       expect(
         result,
-        equals([
+        equals(<String>[
           '                         A                         ',
           '                        B B                        ',
           '                       C   C                       ',
@@ -112,9 +112,8 @@ void main() {
           '                      D     D                      ',
           '                       C   C                       ',
           '                        B B                        ',
-          '                         A                         ',
-        ]),
-      );
+          '                         A                         '
+        ]));
       }, skip: true);
   });
 }
