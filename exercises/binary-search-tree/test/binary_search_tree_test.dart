@@ -50,31 +50,31 @@ void main() {
       test('can sort single number', () {
         final bst = BinarySearchTree('2');
 
-        expect(bst.sortedData, equals(['2']));
+        expect(bst.sortedData, equals(<String>['2']));
       }, skip: true);
 
       test('can sort if second number is smaller than first', () {
         final bst = BinarySearchTree('2')..insert('1');
 
-        expect(bst.sortedData, equals(['1', '2']));
+        expect(bst.sortedData, equals(<String>['1', '2']));
       }, skip: true);
 
       test('can sort if second number is same as first', () {
         final bst = BinarySearchTree('2')..insert('2');
 
-        expect(bst.sortedData, equals(['2', '2']));
+        expect(bst.sortedData, equals(<String>['2', '2']));
       }, skip: true);
 
       test('can sort if second number is greater than first', () {
         final bst = BinarySearchTree('2')..insert('3');
 
-        expect(bst.sortedData, equals(['2', '3']));
+        expect(bst.sortedData, equals(<String>['2', '3']));
       }, skip: true);
 
       test('can sort complex tree', () {
         final bst = BinarySearchTree('2')..insert("1")..insert("3")..insert("6")..insert("7")..insert("5");
 
-        expect(bst.sortedData, equals(['1', '2', '3', '5', '6', '7']));
+        expect(bst.sortedData, equals(<String>['1', '2', '3', '5', '6', '7']));
       }, skip: true);
     });
   });
