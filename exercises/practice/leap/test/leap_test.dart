@@ -6,7 +6,7 @@ final leap = Leap();
 void main() {
   group('Leap', () {
     test('year not divisible by 4 in common year', () {
-      final bool result = leap.leapyear(2015);
+      final bool result = leap.leapYear(2015);
       expect(result, equals(false));
     }, skip: false);
 
