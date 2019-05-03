@@ -1,3 +1,4 @@
+import 'package:dart2_constant/core.dart' as polyfill;
 import 'package:gigasecond/gigasecond.dart';
 import 'package:test/test.dart';
 
