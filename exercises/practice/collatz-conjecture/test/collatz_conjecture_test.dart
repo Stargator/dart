@@ -6,8 +6,9 @@ import 'package:test/test.dart';
 /// but you can find out more info at https://pub.dev/documentation/test/latest/
 /// if you wish to learn more about predicates and matchers used in Unit Testing for Dart.
 
+final collatzConjecture = new CollatzConjecture();
+
 void main() {
-  final collatzConjecture = new CollatzConjecture();
   final onlyPositive = predicate(
       (ArgumentError e) => e is ArgumentError && e.message == 'Only positive numbers are allowed',
       'an ArgumentError with the message "Only positive numbers are allowed"');
