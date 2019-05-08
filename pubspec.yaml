@@ -7,9 +7,12 @@ authors:
   - fwip
   - devkabiir
   - jvarness <jake.varness@gmail.com>
-dev_dependencies:
+dependencies:
   args: '^1.0.0'
-  dart_style: '^1.0.8'
   io: '^0.3.0'
+  logging: '^0.11.3+2'
+  yaml: '^2.1.12'
+dev_dependencies:
+  dart_style: '^1.0.8'
+  mockito: '^4.0.0'
   test: '>=0.12.24+8 <2.0.0'
-  yaml: '^2.0.0'
