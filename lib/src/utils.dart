@@ -53,6 +53,8 @@ class CommonUtils {
 
 /// Returns [exitCode] and shows an error message if it is different from 0.
 int _exit(int exitCode) {
-  if (exitCode != 0) print('Failed. Error code: $exitCode.');
+  if (exitCode != 0) {
+    print('Failed. Error code: $exitCode.');
+  }
   return exitCode;
 }

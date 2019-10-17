@@ -15,14 +15,18 @@ final _parser = ArgParser()
 // Helpers
 /// Determine the words within a string, so they can be placed in the proper case.
 List<String> words(String str) {
-  if (str == null) return [''];
+  if (str == null) {
+    return [''];
+  }
 
   return str.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]'), ' ').replaceAll(RegExp(r' +'), ' ').trim().split(' ');
 }
 
 /// Converts first character to upper case.
 String upperFirst(String str) {
-  if (str == null || str.isEmpty) return '';
+  if (str == null || str.isEmpty) {
+    return '';
+  }
 
   final chars = str.split('');
   final first = chars.first;
@@ -71,8 +75,7 @@ String _testCasesString = '''
 /// Sorts the import of packages, instantiates an instance of the exercise class, and defines the main
 /// function's group of tests.
 String testTemplate(String name) {
-  final packages = <String>[name, 'test'];
-  packages.sort();
+  final packages = <String>[name, 'test']..sort();
 
   return '''
 import 'package:${snakeCase(packages[0])}/${snakeCase(packages[0])}.dart';
@@ -122,12 +125,10 @@ linter:
 
 /// Parses through the given test case (or group) in order to produce a String of code for the generated test suite.
 String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool isFirstTest = true, String returnType}) {
-  bool skipTests = isFirstTest;
+  var skipTests = isFirstTest;
 
   if (testCase['cases'] != null) {
-    if (returnType == null) {
-      returnType = _determineBestReturnType(testCase['cases'] as List<dynamic>);
-    }
+    returnType ??= _determineBestReturnType(testCase['cases'] as List<dynamic>);
 
     // We have a group, not a case
     final description = _handleQuotes(testCase['description'] as String);
@@ -157,9 +158,9 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
   final method = testCase['property'].toString();
   final expected = _repr(testCase['expected'], typeDeclaration: returnType);
 
-  returnType = _finalizeReturnType(expected, returnType);
+  final finalReturnType = _finalizeReturnType(expected, returnType);
   final input = testCase['input'] as Map<String, dynamic>;
-  String arguments = input.keys.map((k) => _repr(input[k])).join(', ');
+  var arguments = input.keys.map((k) => _repr(input[k])).join(', ');
   arguments = arguments == 'null' ? '' : arguments;
 
   if (_containsWhitespaceCodes(arguments)) {
@@ -168,7 +169,7 @@ String testCaseTemplate(String exerciseName, Map<String, Object> testCase, {bool
 
   final result = '''
     test($description, () {
-      final $returnType result = $object.$method($arguments);
+      final $finalReturnType result = $object.$method($arguments);
       expect(result, equals($expected));
     }, skip: ${!skipTests});
 ''';
@@ -222,8 +223,8 @@ bool _doGenerate(Directory exerciseDir, String exerciseName, String version) {
 }
 
 /// Creates/updates an exercise.
-void _generateExercise(Map<String, Object> specification, String exerciseFilename, String exerciseName,
-    Directory exerciseDir, String version, ArgResults arguments) async {
+void _generateExercise(Map<String, Object> specification, String exerciseFileName, String exerciseName,
+    Directory exerciseDir, String version, ArgResults arguments) {
   _testCasesString = testCaseTemplate(exerciseName, specification);
   print('Found: ${arguments['spec-path']}/exercises/$exerciseName/canonical-data.json');
 
@@ -231,9 +232,9 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
   Directory('${exerciseDir.path}/test').createSync(recursive: true);
 
   // Create files
-  final testFileName = '${exerciseDir.path}/test/${exerciseFilename}_test.dart';
+  final testFileName = '${exerciseDir.path}/test/${exerciseFileName}_test.dart';
   File('${exerciseDir.path}/lib/example.dart').writeAsStringSync(exampleTemplate(exerciseName));
-  File('${exerciseDir.path}/lib/${exerciseFilename}.dart').writeAsStringSync(mainTemplate(exerciseName));
+  File('${exerciseDir.path}/lib/$exerciseFileName.dart').writeAsStringSync(mainTemplate(exerciseName));
   File(testFileName).writeAsStringSync(testTemplate(exerciseName));
   File('${exerciseDir.path}/analysis_options.yaml').writeAsStringSync(analysisOptionsTemplate());
   File('${exerciseDir.path}/pubspec.yaml').writeAsStringSync(pubTemplate(exerciseName, version));
@@ -252,8 +253,9 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
   // The output from file generation is not always well-formatted, use dartfmt to clean it up
   final fmtSuccess = _runProcess('pub', ['run', 'dart_style:format', '-i', '0', '-l', '120', '-w', exerciseDir.path]);
   if (fmtSuccess) {
-    stdout.write('Successfully created a rough-draft of tests at \'$testFileName\'.\n');
-    stdout.write('You should check this over and fix or refine as necessary.\n');
+    stdout
+      ..write('Successfully created a rough-draft of tests at \'$testFileName\'.\n')
+      ..write('You should check this over and fix or refine as necessary.\n');
   } else {
     stderr
         .write('Warning: dart_style:format exited with an error, files in \'${exerciseDir.path}\' may be malformed.\n');
@@ -270,22 +272,21 @@ void _generateExercise(Map<String, Object> specification, String exerciseFilenam
 String _escapeBackslash(String input) {
   final result = <String>[];
 
-  input.split('').forEach((String value) {
+  for (var value in input.split('')) {
     if (value == r'\') {
       result.add(value + value);
     } else {
       result.add(value);
     }
-  });
+  }
 
   return result.join();
 }
 
 String _escapeWhitespace(String input) => input..replaceAll('\\', '\\\\');
 
-bool _containsWhitespaceCodes(String input) {
-  return input.contains('\n') || input.contains('\r') || input.contains('\t');
-}
+bool _containsWhitespaceCodes(String input) =>
+  input.contains('\n') || input.contains('\r') || input.contains('\t');
 
 String _determineBestReturnType(List<dynamic> specCases) {
   final expectedList = retrieveListOfExpected(specCases);
@@ -330,14 +331,12 @@ String _determineBestReturnType(List<dynamic> specCases) {
 
 /// Parses through a list of test cases to assemble a list of all the expected values within the test cases.
 Set<dynamic> retrieveListOfExpected(List<dynamic> testCases, {Set<dynamic> expectedTypeSet}) {
-  if (expectedTypeSet == null) {
-    expectedTypeSet = Set<dynamic>();
-  }
+  var typeSet = expectedTypeSet == null ? Set<dynamic>() : expectedTypeSet;
 
   for (var count = 0; count < testCases.length; count++) {
     if (testCases[count] is Map) {
       final entry = testCases[count] as Map;
-      bool addEntry = true;
+      var addEntry = true;
 
       if (entry.containsKey('expected')) {
         if (entry['expected'] is Map) {
@@ -349,17 +348,17 @@ Set<dynamic> retrieveListOfExpected(List<dynamic> testCases, {Set<dynamic> expec
         }
 
         if (addEntry) {
-          expectedTypeSet.add(entry['expected']);
+          typeSet.add(entry['expected']);
         }
       }
 
       if (entry.containsKey('cases')) {
-        expectedTypeSet = retrieveListOfExpected(entry['cases'] as List, expectedTypeSet: expectedTypeSet);
+        typeSet = retrieveListOfExpected(entry['cases'] as List, expectedTypeSet: typeSet);
       }
     }
 
     if (testCases[count] is List) {
-      expectedTypeSet = retrieveListOfExpected(testCases[count] as List, expectedTypeSet: expectedTypeSet);
+      typeSet = retrieveListOfExpected(testCases[count] as List, expectedTypeSet: typeSet);
     }
   }
 
@@ -384,7 +383,7 @@ String _handleQuotes(String input) {
 /// `typeDeclaration` is the determined return type and used to determine the type within collections.
 String _repr(Object x, {String typeDeclaration}) {
   if (x is String) {
-    String result = _escapeBackslash(x);
+    var result = _escapeBackslash(x);
     result = result
         .replaceAll('\'', r"\'")
         .replaceAll('\n', r'\n')
@@ -482,11 +481,11 @@ String _getFriendlyType(Object x) {
 // Returns true if the cmd was successful, false otherwise
 bool _runProcess(String cmd, List<String> arguments) {
   final res = Process.runSync(cmd, arguments, runInShell: true);
-  if (!res.stdout.toString().isEmpty) {
+  if (res.stdout.toString().isNotEmpty) {
     stdout.write(res.stdout);
   }
 
-  if (!res.stderr.toString().isEmpty) {
+  if (res.stderr.toString().isNotEmpty) {
     stderr.write(res.stderr);
   }
 
