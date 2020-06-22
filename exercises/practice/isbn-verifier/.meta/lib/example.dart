@@ -1,5 +1,5 @@
-final RegExp _formatChecker = new RegExp(r'^\d-?\d{3}-?\d{5}-?[\dX]$');
-final RegExp _cleaner = new RegExp(r'\W');
+final RegExp _formatChecker = RegExp(r'^\d-?\d{3}-?\d{5}-?[\dX]$');
+final RegExp _cleaner = RegExp(r'\W');
 
 bool isValid(String isbn) {
   if (!_formatChecker.hasMatch(isbn)) {

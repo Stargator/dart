@@ -2,7 +2,7 @@ import 'package:darts/darts.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final darts = new Darts();
+  final darts = Darts();
 
   group('Darts', () {
     group('Return the correct amount earned by a dart landing in a given point in the target problem.', () {

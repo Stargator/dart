@@ -2,7 +2,7 @@ import 'package:pangram/pangram.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final pangram = new Pangram();
+  final pangram = Pangram();
 
   group('Pangram', () {
     group('Check if the given string is a pangram', () {

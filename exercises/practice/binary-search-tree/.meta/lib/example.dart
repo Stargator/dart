@@ -2,7 +2,7 @@ class BinarySearchTree<T extends Comparable<T>> {
   /// Root node for the tree.
   final Node<T> root;
 
-  BinarySearchTree(T rootData) : root = new Node<T>(rootData);
+  BinarySearchTree(T rootData) : root = Node<T>(rootData);
 
   /// Returns an empty `List` if [root] is `null`.
   ///
@@ -42,10 +42,10 @@ class Node<T extends Comparable<T>> {
   bool insert(T value) {
     /// Insert in left sub-tree if its a smaller or equal number.
     if (value.compareTo(data) <= 0) {
-      return left?.insert(value) ?? (left = new Node(value)).data == value;
+      return left?.insert(value) ?? (left = Node(value)).data == value;
     }
 
     /// Insert in right sub-tree if its a greater number.
-    return right?.insert(value) ?? (right = new Node(value)).data == value;
+    return right?.insert(value) ?? (right = Node(value)).data == value;
   }
 }

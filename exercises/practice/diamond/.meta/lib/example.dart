@@ -5,14 +5,14 @@ class Diamond {
     } else {
       int diamondSize = (letter.codeUnitAt(0) - 64);
       int maxStringSize = diamondSize * 2 - 1;
-      List<String> diamond = <String>[];
+      final diamond = <String>[];
 
       for (int i = 0; i < diamondSize; i++) {
         String row = "".padRight(maxStringSize, " ");
         if (i == 0) {
           diamond.add(row.replaceRange(0, 1, letter).replaceRange(row.length - 1, row.length, letter));
         } else {
-          String nextLetter = new String.fromCharCode(letter.codeUnitAt(0) - i);
+          final nextLetter = String.fromCharCode(letter.codeUnitAt(0) - i);
           row = row.replaceRange(i, i, nextLetter).replaceRange(row.length - (i + 1), row.length - (i - 1), nextLetter);
           diamond.insert(0, row);
           diamond.add(row);

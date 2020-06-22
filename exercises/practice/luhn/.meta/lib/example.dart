@@ -1,8 +1,8 @@
 class Luhn {
   bool valid(String value) {
-    String clean = value.replaceAll(new RegExp(r'\s'), '');
+    String clean = value.replaceAll(RegExp(r'\s'), '');
 
-    if (clean.length <= 1 || clean.contains(new RegExp(r'\D'))) {
+    if (clean.length <= 1 || clean.contains(RegExp(r'\D'))) {
       return false;
     }
 

@@ -2,7 +2,7 @@ import 'package:luhn/luhn.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final luhn = new Luhn();
+  final luhn = Luhn();
 
   group('Luhn', () {
     test("single digit strings can not be valid", () {

@@ -2,7 +2,7 @@ import 'package:secret_handshake/secret_handshake.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final secretHandshake = new SecretHandshake();
+  final secretHandshake = SecretHandshake();
 
   group('SecretHandshake', () {
     group('Create a handshake for a number', () {
