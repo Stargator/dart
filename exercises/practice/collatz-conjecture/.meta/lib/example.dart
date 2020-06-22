@@ -1,7 +1,7 @@
 class CollatzConjecture {
   int steps(int input) {
     if (input < 1) {
-      throw new ArgumentError('Only positive numbers are allowed');
+      throw ArgumentError('Only positive numbers are allowed');
     }
 
     int n = input;

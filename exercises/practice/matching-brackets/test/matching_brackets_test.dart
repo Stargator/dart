@@ -2,7 +2,7 @@ import 'package:matching_brackets/matching_brackets.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final MatchingBrackets matchingBrackets = new MatchingBrackets();
+  final MatchingBrackets matchingBrackets = MatchingBrackets();
   group('MatchingBrackets', () {
     test("paired square brackets", () {
       final bool result = matchingBrackets.isPaired("[]");

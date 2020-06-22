@@ -43,11 +43,11 @@ class Row {
     /// If the entered string is empty
     /// i.e. no columns.
     if (content.isEmpty) {
-      _cells.add(new Cell(this, 0, ""));
+      _cells.add(Cell(this, 0, ""));
     } else {
       _cells.addAll(
         content.split("").map(
-              (content) => new Cell(this, _cells.length, content),
+              (content) => Cell(this, _cells.length, content),
             ),
       );
     }
@@ -76,7 +76,7 @@ class Minesweeper {
     if (minefield.isNotEmpty) {
       _minefield.addAll(
         minefield.map(
-          (content) => new Row(_minefield.length, content),
+          (content) => Row(_minefield.length, content),
         ),
       );
 

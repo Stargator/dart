@@ -2,7 +2,7 @@ import 'dart:collection';
 
 class MatchingBrackets {
   bool isPaired(String input) {
-    ListQueue<String> stack = new ListQueue(input.length);
+    ListQueue<String> stack = ListQueue(input.length);
 
     for (String char in input.split('')) {
       if (char == '(' || char == '{' || char == '[') {

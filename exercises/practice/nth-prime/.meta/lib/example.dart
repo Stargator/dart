@@ -3,7 +3,7 @@ import 'dart:math';
 class NthPrime {
   int prime(int number) {
     if (number < 1) {
-      throw new ArgumentError('There is no zeroth prime');
+      throw ArgumentError('There is no zeroth prime');
     }
 
     int primes = 0;

@@ -3,10 +3,10 @@ class PascalsTriangle {
     if (rows <= 0) {
       return [];
     } else {
-      List<List<int>> triangle = new List<List<int>>();
+      List<List<int>> triangle = List<List<int>>();
 
       for (int x = 1; x <= rows; x++) {
-        List<int> nextRow = new List<int>(x)
+        List<int> nextRow = List<int>(x)
           ..[0] = 1
           ..[x - 1] = 1;
         if (triangle.length > 1) {

@@ -9,5 +9,5 @@ class DifferenceOfSquares {
 
   num _sum(int input) => input * (input + 1) ~/ 2;
 
-  List<int> _range(int length) => new List<int>.generate(length, (i) => i + 1);
+  List<int> _range(int length) => List<int>.generate(length, (i) => i + 1);
 }

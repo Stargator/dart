@@ -2,7 +2,7 @@ import 'package:isogram/isogram.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final isogram = new Isogram();
+  final isogram = Isogram();
 
   group('Isogram', () {
     group('Check if the given string is an isogram', () {
