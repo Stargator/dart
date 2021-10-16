@@ -14,7 +14,7 @@ Future<Null> main() async {
   await utils.runCmd('dart', ['run', 'dart_style:format', '-l', '120', '-w', '.']);
 
   print('Running tests...');
-  await utils.runCmd('dart', ['run', 'test']);
+  await utils.runCmd('dart', ['test']);
 
   await utils.terminate();
   print('Done!');
