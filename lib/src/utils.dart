@@ -52,3 +52,59 @@ int _exit(int exitCode) {
   if (exitCode != 0) print('Failed. Error code: $exitCode.');
   return exitCode;
 }
+
+Future<List<FileSystemEntity>> locateExercismDir(String exercisesDir) async {
+  final exercisesRootDir = Directory(exercisesDir);
+
+  assert(await exercisesRootDir.exists());
+
+  final exercisesDirs = exercisesRootDir.listSync().where((d) => d is Directory);
+
+  /// Sort directories alphabetically
+  final sortedExerciseDirs = exercisesDirs.toList();
+  sortedExerciseDirs.sort((a, b) => a.path.compareTo(b.path));
+
+  return sortedExerciseDirs;
+}
+
+Future replaceStubsWithExamples(String packageName, Directory currentDir) async {
+  File stub = File('lib/${packageName}.dart');
+  File example = File('.meta/lib/example.dart');
+
+  try {
+    stub = await stub.rename('lib/${packageName}.dart.bu');
+    example = await example.rename('lib/${packageName}.dart');
+
+    for (List<String> cmds in [
+      /// Pull dependencies
+      ['dart', 'pub', 'upgrade'],
+
+      /// Run all exercise tests
+      ['dart', 'test', '--run-skipped']
+    ]) {
+      await runCmd(cmds);
+    }
+  } finally {
+    await example.rename('.meta/lib/example.dart');
+    await stub.rename('lib/${packageName}.dart');
+
+    Directory.current = currentDir;
+  }
+}
+
+Future runCmd(List<String> cmds) async {
+  final cmd = cmds.first;
+  final other = cmds.skip(1).toList();
+
+  final res = await Process.run(cmd, other, runInShell: true);
+
+  if (!res.stdout.toString().isEmpty) {
+    stdout.write(res.stdout);
+  }
+
+  if (!res.stderr.toString().isEmpty) {
+    stderr.write(res.stderr);
+  }
+
+  assert(res.exitCode == 0);
+}

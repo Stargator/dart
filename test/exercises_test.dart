@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:exercism_dart/src/utils.dart';
 import 'package:test/test.dart';
 import 'package:yaml/yaml.dart';
 
@@ -9,23 +10,6 @@ const String envName = 'EXERCISE';
 const String practiceExcercisesDir = 'exercises/practice';
 
 /// Helpers
-Future runCmd(List<String> cmds) async {
-  final cmd = cmds.first;
-  final other = cmds.skip(1).toList();
-
-  final res = await Process.run(cmd, other, runInShell: true);
-
-  if (!res.stdout.toString().isEmpty) {
-    stdout.write(res.stdout);
-  }
-
-  if (!res.stderr.toString().isEmpty) {
-    stderr.write(res.stderr);
-  }
-
-  assert(res.exitCode == 0);
-}
-
 Future<String> getPackageName() async {
   final pubspec = File('pubspec.yaml');
 
@@ -34,22 +18,6 @@ Future<String> getPackageName() async {
   final String packageName = loadYaml(pubspecString)['name'] as String;
 
   return packageName;
-}
-
-Future locateExercismDirAndExecuteTests() async {
-  final exercisesRootDir = Directory(practiceExcercisesDir);
-
-  assert(await exercisesRootDir.exists());
-
-  final exercisesDirs = exercisesRootDir.listSync().where((d) => d is Directory);
-
-  /// Sort directories alphabetically
-  final sortedExerciseDirs = exercisesDirs.toList();
-  sortedExerciseDirs.sort((a, b) => a.path.compareTo(b.path));
-
-  for (FileSystemEntity dir in sortedExerciseDirs) {
-    await runTest(dir.path);
-  }
 }
 
 /// Execute a single test
@@ -66,28 +34,7 @@ Running tests for: $packageName
 ================================================================================
 ''');
 
-  File stub = File('lib/${packageName}.dart');
-  File example = File('.meta/lib/example.dart');
-
-  try {
-    stub = await stub.rename('lib/${packageName}.dart.bu');
-    example = await example.rename('lib/${packageName}.dart');
-
-    for (List<String> cmds in [
-      /// Pull dependencies
-      ['dart', 'pub', 'upgrade'],
-
-      /// Run all exercise tests
-      ['dart', 'test', '--run-skipped']
-    ]) {
-      await runCmd(cmds);
-    }
-  } finally {
-    await example.rename('.meta/lib/example.dart');
-    await stub.rename('lib/${packageName}.dart');
-
-    Directory.current = current;
-  }
+  replaceStubsWithExamples(packageName, current);
 }
 
 /// Execute all the tests under the exercise directory
@@ -96,7 +43,11 @@ Future runAllTests() async {
 
   assert(await dartExercismRootDir.exists());
 
-  await locateExercismDirAndExecuteTests();
+  final orderedExercismDirs = await locateExercismDir(practiceExcercisesDir);
+
+  for (FileSystemEntity dir in orderedExercismDirs) {
+    await runTest(dir.path);
+  }
 
   Directory.current = dartExercismRootDir.parent;
 
